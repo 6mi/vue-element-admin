@@ -20,6 +20,7 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+import '@/styles/frame.scss'
 // mock api in github pages site build
 // if (process.env.NODE_ENV === 'production') {
 

@@ -1,6 +1,6 @@
 <template>
   <el-container class="l-container">
-    <el-header class="l-header" height="8%">
+    <el-header class="l-header" height="67px">
       <div class="h-title">
         <span>查 询</span>
       </div>
@@ -25,7 +25,7 @@
         :data="list"
         stripe
         highlight-current-row
-        style="font-size:12px;"
+        style="font-size:12px;min-height: calc(100vh - 181px);"
         row-key="id"
       >
         <el-table-column
@@ -145,74 +145,6 @@ export default {
 </script>
 
 <style>
-.l-container {
-  min-height: calc(100vh - 84px);
-}
-.l-header {
-  border: 1px solid #e5e5e5;
-  padding: 1px 0px 1px 0px;
-}
-@media screen and (max-height: 624px) {
-  .l-header {
-    min-height: 12%;
-  }
-}
-.l-main {
-  padding: 0px;
-  overflow: hidden;
-}
-.h-title {
-  width: 100%;
-  height: 30px;
-  background-color: #f9f9f9;
-  border: 1px solid #dfdfdf;
-  font-size: 12px;
-  line-height: 30px;
-  color: #737373;
-  border-top: 0px;
-}
-.h-title span {
-  margin-left: 14px;
-}
-.l-main .el-table {
-  min-height: calc(100vh - 181px);
-}
-/*设置查询区域样式*/
-.search-form {
-  font-size: 16px;
-  padding-top: 5px;
-  padding-left: 10px;
-}
-.search-form .el-form-item {
-  height: 28px;
-  margin: 0;
-}
-.search-form .el-form-item__label {
-  height: 28px;
-  line-height: 28px;
-  font-size: 12px;
-  font-family: 微软雅黑, 宋体, Arial, Helvetica, Verdana, sans-serif;
-  font-weight: normal;
-}
-.search-form .el-form-item__content {
-  height: 28px;
-  line-height: 28px;
-}
-.search-form .search-input {
-  height: 28px;
-  line-height: 28px;
-}
-.search-form .search-input .el-input__inner {
-  color: #dfdfdf;
-  height: 28px;
-}
-.search-form button {
-  width: 90px;
-  padding: 6px 20px;
-}
-.el-pagination {
-  position: fixed;
-  bottom: 0px;
-}
+
 </style>
 
