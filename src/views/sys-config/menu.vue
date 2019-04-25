@@ -1,19 +1,19 @@
 <template>
   <el-container class="l-container">
-    <el-header class="l-header" height="">
+    <el-header class="l-header" height="8%">
       <div class="h-title">
         <span>查 询</span>
       </div>
-      <el-form class="search-form">
-        <el-form-item label="菜单名称">
+      <el-form class="search-form" :inline="true" style="42px">
+        <el-form-item label="菜单名称:">
           <el-input
             v-model="searchMenuName"
             placeholder="支持模糊查询"
-            style="width:160px"
+            class="search-input"
           />
         </el-form-item>
         <el-form-item>
-          <el-button @click="handleEdit(-1, { id: 0 })">新 增</el-button>
+          <el-button type="primary" icon="el-icon-zoom-in" @click="handleEdit(-1, { id: 0 })">新 增</el-button>
         </el-form-item>
       </el-form>
     </el-header>
@@ -23,7 +23,6 @@
       </div>
       <el-table
         :data="list"
-        height="640px"
         stripe
         highlight-current-row
         style="font-size:12px;"
@@ -150,12 +149,17 @@ export default {
   min-height: calc(100vh - 84px);
 }
 .l-header {
-  height: 150px;
   border: 1px solid #e5e5e5;
   padding: 1px 0px 1px 0px;
 }
+@media screen and (max-height: 624px) {
+  .l-header {
+    min-height: 12%;
+  }
+}
 .l-main {
   padding: 0px;
+  overflow: hidden;
 }
 .h-title {
   width: 100%;
@@ -170,9 +174,45 @@ export default {
 .h-title span {
   margin-left: 14px;
 }
-
+.l-main .el-table {
+  min-height: calc(100vh - 181px);
+}
+/*设置查询区域样式*/
 .search-form {
   font-size: 16px;
+  padding-top: 5px;
+  padding-left: 10px;
+}
+.search-form .el-form-item {
+  height: 28px;
+  margin: 0;
+}
+.search-form .el-form-item__label {
+  height: 28px;
+  line-height: 28px;
+  font-size: 12px;
+  font-family: 微软雅黑, 宋体, Arial, Helvetica, Verdana, sans-serif;
+  font-weight: normal;
+}
+.search-form .el-form-item__content {
+  height: 28px;
+  line-height: 28px;
+}
+.search-form .search-input {
+  height: 28px;
+  line-height: 28px;
+}
+.search-form .search-input .el-input__inner {
+  color: #dfdfdf;
+  height: 28px;
+}
+.search-form button {
+  width: 90px;
+  padding: 6px 20px;
+}
+.el-pagination {
+  position: fixed;
+  bottom: 0px;
 }
 </style>
 
