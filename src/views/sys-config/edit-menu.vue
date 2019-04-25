@@ -60,11 +60,14 @@ import { getParentMenuList, submitMenu, getMenuEntity } from '@/api/sys-config'
 export default {
   name: 'EditMenu',
   props: {
-    isVisible: Boolean
+    isVisible: Boolean,
+    primaryKey: {
+      type: Number,
+      default: 0
+    }
   },
   data() {
     return {
-      primaryKey: 0,
       options: null,
       entity: {
         id: null,
@@ -126,12 +129,6 @@ export default {
           this.$alter(msg)
         }
       }
-    },
-    loading: function(id) {
-      this.primaryKey = id
-      this.getParentMenuList().then(res => {
-        this.getMenuEntity()
-      })
     }
   }
 }

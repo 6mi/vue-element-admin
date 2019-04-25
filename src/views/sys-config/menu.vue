@@ -13,7 +13,13 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-zoom-in" @click="handleEdit(-1, { id: 0 })">新 增</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-zoom-in"
+            @click="handleEdit()"
+          >
+            新 增
+          </el-button>
         </el-form-item>
       </el-form>
     </el-header>
@@ -64,7 +70,12 @@
         @size-change="handleSizeChange"
       />
     </el-main>
-    <edit-menu ref="editMenu" :is-visible.sync="isVisible" @reload="loading" />
+    <edit-menu
+      v-if="hackReset"
+      :is-visible.sync="isVisible"
+      :primary-key="primaryKey"
+      @reload="loading"
+    />
   </el-container>
 </template>
 
@@ -83,7 +94,8 @@ export default {
       total: 50,
       currentPage: 1,
       pageSize: 20,
-      isVisible: false
+      isVisible: false,
+      hackReset: null
     }
   },
   mounted: function() {
@@ -97,7 +109,6 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val
-      console.log(this.pageSize)
       var data = this.initData()
       this.list = data.slice(
         this.pageSize * (this.currentPage - 1),
@@ -123,10 +134,17 @@ export default {
         })
     },
     handleEdit(index, row) {
-      var id = row.id
-      if (id) {
+      this.hackReset = false
+      this.$nextTick(() => {
+        this.hackReset = true
+      })
+
+      if (row) {
+        this.primaryKey = row.id
         this.isVisible = true
-        this.$refs.editMenu.loading(id)
+      } else {
+        this.primaryKey = 0
+        this.isVisible = true
       }
     },
     async getPermissions() {
@@ -145,6 +163,5 @@ export default {
 </script>
 
 <style>
-
 </style>
 
