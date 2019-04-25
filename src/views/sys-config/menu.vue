@@ -32,7 +32,7 @@
         stripe
         height="100%"
         highlight-current-row
-        style="font-size:12px;min-height: calc(100vh - 181px);"
+        style="font-size:12px;min-height: calc(100vh - 213px);"
         row-key="id"
       >
         <el-table-column
