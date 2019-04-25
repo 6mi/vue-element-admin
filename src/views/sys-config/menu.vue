@@ -30,6 +30,7 @@
       <el-table
         :data="list"
         stripe
+        height="100%"
         highlight-current-row
         style="font-size:12px;min-height: calc(100vh - 181px);"
         row-key="id"
@@ -63,7 +64,7 @@
       <el-pagination
         :page-sizes="[20, 50, 100, 200]"
         :page-size="pageSize"
-        :current-page="currentPage"
+        :current-page="pageIndex"
         :total="total"
         layout="total, sizes, prev, pager, next, jumper"
         @current-change="handleCurrentChange"
@@ -80,7 +81,7 @@
 </template>
 
 <script>
-import { getPermissions } from '@/api/sys-config'
+import { GetAllMenuList, delMenu } from '@/api/sys-config'
 import EditMenu from './edit-menu'
 
 export default {
@@ -92,14 +93,18 @@ export default {
       searchMenuName: '',
       list: null,
       total: 50,
-      currentPage: 1,
+      pageIndex: 1,
       pageSize: 20,
       isVisible: false,
       hackReset: null
     }
   },
   mounted: function() {
-    this.getPermissions()
+    var data = {
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize
+    }
+    this.GetAllMenuList(data)
       .then(() => {})
       .catch(() => {})
   },
@@ -109,29 +114,23 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val
-      var data = this.initData()
-      this.list = data.slice(
-        this.pageSize * (this.currentPage - 1),
-        this.pageSize * this.currentPage
-      )
+      this.loading()
     },
     handleCurrentChange(val) {
-      this.currentPage = val
-      var data = this.initData()
-      this.list = data.slice(
-        this.pageSize * (this.currentPage - 1),
-        this.pageSize * this.currentPage
-      )
+      this.pageIndex = val
+      this.loading()
     },
     handleDel(index, row) {
       this.$confirm('确定删除吗?')
         .then(() => {
-          console.log(row)
-          console.log('yes')
+          if (row) {
+            delMenu(row.id).then(() => {
+              this.$alert('删除成功')
+              this.loading()
+            })
+          }
         })
-        .catch(() => {
-          console.log('no')
-        })
+        .catch(() => {})
     },
     handleEdit(index, row) {
       this.hackReset = false
@@ -147,16 +146,23 @@ export default {
         this.isVisible = true
       }
     },
-    async getPermissions() {
-      var { data, msg, result } = await getPermissions()
+    async GetAllMenuList(param) {
+      var { data, msg, result } = await GetAllMenuList(param)
       if (result) {
-        this.list = data
+        this.list = data.items
+        this.total = data.total
       } else {
         alert(msg)
       }
     },
     loading() {
-      this.getPermissions()
+      var data = {
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize
+      }
+      this.GetAllMenuList(data)
+        .then(() => {})
+        .catch(() => {})
     }
   }
 }

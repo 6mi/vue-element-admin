@@ -31,3 +31,21 @@ export function getMenuEntity(id) {
     }
   })
 }
+
+export function delMenu(id) {
+  return request({
+    url: '/api/sysconfig/delmenu',
+    method: 'DELETE',
+    params: {
+      id: id
+    }
+  })
+}
+
+export function GetAllMenuList(data) {
+  return request({
+    url: '/api/sysconfig/GetAllMenuList',
+    method: 'post',
+    data
+  })
+}
