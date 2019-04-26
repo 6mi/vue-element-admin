@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     title="菜单编辑"
-    :visible="isVisible"
+    :visible="true"
     width="36%"
     @close="handClose"
   >
@@ -57,10 +57,10 @@
 
 <script>
 import { getParentMenuList, submitMenu, getMenuEntity } from '@/api/sys-config'
+
 export default {
   name: 'EditMenu',
   props: {
-    isVisible: Boolean,
     primaryKey: {
       type: Number,
       default: 0
@@ -92,7 +92,8 @@ export default {
   },
   methods: {
     handClose: function() {
-      this.$emit('update:is-visible', false)
+      this.visible = false
+      this.$emit('update:hack-reset', false)
     },
     Submit: function() {
       this.$refs['ruleForm'].validate(valid => {

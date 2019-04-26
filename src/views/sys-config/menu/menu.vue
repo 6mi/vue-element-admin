@@ -48,15 +48,28 @@
         <el-table-column label="排 序" prop="order" width="120" />
         <el-table-column label="操 作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
+            <el-button
+              size="mini"
+              plain
+              @click="handleEdit(scope.$index, scope.row)"
+            >
               编 辑
             </el-button>
             <el-button
               type="danger"
               size="mini"
+              plain
               @click="handleDel(scope.$index, scope.row)"
             >
               删 除
+            </el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              plain
+              @click="handlerBtn(scope.row)"
+            >
+              查看按钮
             </el-button>
           </template>
         </el-table-column>
@@ -71,22 +84,19 @@
         @size-change="handleSizeChange"
       />
     </el-main>
-    <edit-menu
-      v-if="hackReset"
-      :is-visible.sync="isVisible"
-      :primary-key="primaryKey"
-      @reload="loading"
-    />
+    <edit-menu v-if="hackReset" :hack-reset.sync="hackReset" :primary-key="primaryKey" @reload="loading" />
+    <menu-btn v-if="hackBtnReset" :hack-btn-reset.sync="hackBtnReset" />
   </el-container>
 </template>
 
 <script>
 import { GetAllMenuList, delMenu } from '@/api/sys-config'
 import EditMenu from './edit-menu'
+import MenuBtn from './menu-btn'
 
 export default {
   name: 'Menu',
-  components: { EditMenu },
+  components: { EditMenu, MenuBtn },
   data() {
     return {
       primaryKey: 0,
@@ -95,18 +105,12 @@ export default {
       total: 50,
       pageIndex: 1,
       pageSize: 20,
-      isVisible: false,
-      hackReset: null
+      hackReset: false,
+      hackBtnReset: false
     }
   },
   mounted: function() {
-    var data = {
-      pageIndex: this.pageIndex,
-      pageSize: this.pageSize
-    }
-    this.GetAllMenuList(data)
-      .then(() => {})
-      .catch(() => {})
+    this.loading()
   },
   methods: {
     indexMethod(index) {
@@ -133,17 +137,11 @@ export default {
         .catch(() => {})
     },
     handleEdit(index, row) {
-      this.hackReset = false
-      this.$nextTick(() => {
-        this.hackReset = true
-      })
-
       if (row) {
         this.primaryKey = row.id
-        this.isVisible = true
+        this.hackReset = true
       } else {
         this.primaryKey = 0
-        this.isVisible = true
       }
     },
     async GetAllMenuList(param) {
@@ -163,6 +161,11 @@ export default {
       this.GetAllMenuList(data)
         .then(() => {})
         .catch(() => {})
+    },
+    handlerBtn(row) {
+      if (row) {
+        this.hackBtnReset = true
+      }
     }
   }
 }

@@ -11,7 +11,7 @@ const SysConfig = {
   children: [
     {
       path: 'menu',
-      component: () => import('@/views/sys-config/menu.vue'),
+      component: () => import('@/views/sys-config/menu/menu.vue'),
       name: 'Menu',
       meta: { title: 'menuConfig', icon: 'menu' }
     },
