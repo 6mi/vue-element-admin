@@ -142,6 +142,7 @@ export default {
         this.hackReset = true
       } else {
         this.primaryKey = 0
+        this.hackReset = true
       }
     },
     async GetAllMenuList(param) {
