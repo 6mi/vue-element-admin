@@ -13,6 +13,11 @@
           />
         </el-form-item>
         <el-form-item>
+          <el-button type="info" icon="el-icon-search" @click="loading()">
+            查 询
+          </el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button
             type="primary"
             icon="el-icon-zoom-in"
@@ -84,8 +89,17 @@
         @size-change="handleSizeChange"
       />
     </el-main>
-    <edit-menu v-if="hackReset" :hack-reset.sync="hackReset" :primary-key="primaryKey" @reload="loading" />
-    <menu-btn v-if="hackBtnReset" :hack-btn-reset.sync="hackBtnReset" :menu-id="primaryKey" />
+    <edit-menu
+      v-if="hackReset"
+      :hack-reset.sync="hackReset"
+      :primary-key="primaryKey"
+      @reload="loading"
+    />
+    <menu-btn
+      v-if="hackBtnReset"
+      :hack-btn-reset.sync="hackBtnReset"
+      :menu-id="primaryKey"
+    />
   </el-container>
 </template>
 
@@ -157,7 +171,8 @@ export default {
     loading() {
       var data = {
         pageIndex: this.pageIndex,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        menuName: this.searchMenuName
       }
       this.GetAllMenuList(data)
         .then(() => {})
