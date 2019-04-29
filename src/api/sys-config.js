@@ -49,3 +49,31 @@ export function GetAllMenuList(data) {
     data
   })
 }
+
+export function getMenuBtnList(menuId) {
+  return request({
+    url: '/api/sysconfig/getMenuBtnList',
+    method: 'get',
+    params: {
+      menuId: menuId
+    }
+  })
+}
+
+export function editMenuBtn(data) {
+  return request({
+    url: '/api/sysconfig/editmenubtn',
+    method: 'post',
+    data
+  })
+}
+
+export function delMenuBtn(id) {
+  return request({
+    url: '/api/sysconfig/delmenubtn',
+    method: 'delete',
+    params: {
+      id: id
+    }
+  })
+}

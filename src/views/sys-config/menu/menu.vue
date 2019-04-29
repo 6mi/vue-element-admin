@@ -85,7 +85,7 @@
       />
     </el-main>
     <edit-menu v-if="hackReset" :hack-reset.sync="hackReset" :primary-key="primaryKey" @reload="loading" />
-    <menu-btn v-if="hackBtnReset" :hack-btn-reset.sync="hackBtnReset" />
+    <menu-btn v-if="hackBtnReset" :hack-btn-reset.sync="hackBtnReset" :menu-id="primaryKey" />
   </el-container>
 </template>
 
@@ -165,6 +165,7 @@ export default {
     },
     handlerBtn(row) {
       if (row) {
+        this.primaryKey = row.id
         this.hackBtnReset = true
       }
     }
